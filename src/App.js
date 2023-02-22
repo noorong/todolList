@@ -3,7 +3,7 @@ import InsertForm from "./components/InsertForm";
 function App() {
   return (
     <div className="App">
-      <InsertForm />
+      <InsertForm onInsert={(value) => console.log(value)} />
     </div>
   );
 }
