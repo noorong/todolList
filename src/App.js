@@ -1,44 +1,62 @@
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 import InsertForm from "./components/InsertForm";
 import ListView from "./components/ListView";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
-  const InsertHandler = (value) => {
+  const isLimitReached = useMemo(() => {
+    return todoList.length >= 10;
+  }, [todoList]);
+
+  const handleInsert = (value) => {
     setTodoList((current) => {
       const newList = [...current];
       newList.push({
-        value,
         key: new Date().getTime(),
+        value,
         isCompleted: false,
       });
       return newList;
     });
   };
 
-  const completeHandler = (index) => {
+  const handleComplete = (index) => {
     setTodoList((current) => {
       const newList = [...current];
       newList[index].isCompleted = true;
       return newList;
     });
   };
-  const removeHandler = (index) => {
+
+  const handleRemove = (index) => {
     setTodoList((current) => {
       const newList = [...current];
-      newList.splice([index], 1);
+      newList.splice(index, 1);
       return newList;
     });
   };
 
   return (
     <div className="App">
-      <InsertForm onInsert={InsertHandler} />
       <ListView
         todoList={todoList}
-        onComplete={completeHandler}
-        onRemove={removeHandler}
+        onComplete={handleComplete}
+        onRemove={handleRemove}
       />
+      {isLimitReached && (
+        <div
+          style={{
+            padding: "8px 16px",
+            border: "1px solid #FA466A",
+            backgroundColor: "#feecf0",
+            color: "#FA466A",
+            marginBottom: 16,
+          }}
+        >
+          ※ 할일 목록이 너무 많습니다.
+        </div>
+      )}
+      <InsertForm onInsert={handleInsert} disabled={isLimitReached} />
     </div>
   );
 }
