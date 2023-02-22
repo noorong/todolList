@@ -15,10 +15,30 @@ function App() {
       return newList;
     });
   };
+
+  const completeHandler = (index) => {
+    setTodoList((current) => {
+      const newList = [...current];
+      newList[index].isCompleted = true;
+      return newList;
+    });
+  };
+  const removeHandler = (index) => {
+    setTodoList((current) => {
+      const newList = [...current];
+      newList.splice([index], 1);
+      return newList;
+    });
+  };
+
   return (
     <div className="App">
       <InsertForm onInsert={InsertHandler} />
-      <ListView todoList={todoList} />
+      <ListView
+        todoList={todoList}
+        onComplete={completeHandler}
+        onRemove={removeHandler}
+      />
     </div>
   );
 }
