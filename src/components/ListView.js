@@ -6,8 +6,8 @@ const ListView = ({ todoList }) => {
       <ol>
         {todoList.map((item) => {
           return (
-            <li>
-              <span>{item}</span>
+            <li key={item.key}>
+              <span>{item.value}</span>
             </li>
           );
         })}

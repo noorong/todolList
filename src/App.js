@@ -7,7 +7,11 @@ function App() {
   const InsertHandler = (value) => {
     setTodoList((current) => {
       const newList = [...current];
-      newList.push(value);
+      newList.push({
+        value,
+        key: new Date().getTime(),
+        isCompleted: false,
+      });
       return newList;
     });
   };
