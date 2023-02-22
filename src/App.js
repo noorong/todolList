@@ -1,9 +1,20 @@
+import { useState } from "react";
 import InsertForm from "./components/InsertForm";
+import ListView from "./components/ListView";
 
 function App() {
+  const [todoList, setTodoList] = useState([]);
+  const InsertHandler = (value) => {
+    setTodoList((current) => {
+      const newList = [...current];
+      newList.push(value);
+      return newList;
+    });
+  };
   return (
     <div className="App">
-      <InsertForm onInsert={(value) => console.log(value)} />
+      <InsertForm onInsert={InsertHandler} />
+      <ListView todoList={todoList} />
     </div>
   );
 }
